@@ -1,6 +1,7 @@
 import streamlit as st
 import pickle
 import pandas as pd
+import os
 
 # Page config
 st.set_page_config(
@@ -49,8 +50,9 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Load model
-model = pickle.load(open('house_price_model.pkl', 'rb'))
+# Load model with correct path
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+model = pickle.load(open(os.path.join(BASE_DIR, 'house_price_model.pkl'), 'rb'))
 
 # Header
 st.markdown("<h1 class='title'>🏠 House Price Predictor</h1>", unsafe_allow_html=True)
@@ -98,13 +100,11 @@ if st.button("🔍 Predict Price"):
         </div>
     """, unsafe_allow_html=True)
 
-   
     st.markdown("---")
     col1, col2, col3 = st.columns(3)
     col1.metric("🛏️ Bedrooms", beds)
     col2.metric("🚿 Bathrooms", baths)
     col3.metric("📐 Area", f"{area_sqft:,} sqft")
 
-
 st.markdown("---")
-st.markdown("<p style='text-align:center; color:gray;'>  House Price Prediction App</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; color:gray;'>House Price Prediction App</p>", unsafe_allow_html=True)
